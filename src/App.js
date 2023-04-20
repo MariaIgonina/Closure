@@ -1,24 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import logo from './img/logo.png'
+import React from 'react';
+import Context from "./context";
+import { useState } from 'react';
+
+import { Routes, Route } from 'react-router-dom'
+
+import Navbar from './components/navbar'
+import Add from './components/adddata';
+import Dashboard from './components/dashboard/dashboard';
+import Support from './components/support';
+
 
 function App() {
+
+  const url = 'http://localhost:3009'
+
+  const [mainLat, setMainLat] = useState('')
+  const [mainLong, setMainLong] = useState('')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Context.Provider value={{ url, mainLat, mainLong, setMainLat, setMainLong }}>
+      <div className='everything'>
+        <img src={logo} alt="logo" id="logo" />
+        
+        <Navbar />
+
+        <Routes>
+          <Route path= '/' element={<Dashboard />} />
+          <Route path= '/adddata' element={<Add />} />
+          <Route path= '/support' element={<Support />} />
+        </Routes>
+      </div>
+    </Context.Provider>
   );
 }
 
