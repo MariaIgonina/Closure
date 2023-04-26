@@ -4,7 +4,7 @@ const Trap = require('./model/schema');
 
 const controllerDb = {}
 
-controllerDb.postNewTrapInArray = async function (el) {
+async function postNewTrapInArray (el) {
     const { 
       name, 
       basin,
@@ -42,18 +42,22 @@ controllerDb.postNewTrapInArray = async function (el) {
       contact 
     });
   };
-  async function postJSON (json) {
-    json.forEach (async (trap) => {
+
+
+  controllerDb.postJSON = async function () {
+    myJSON.forEach (async (trap) => {
       await postNewTrapInArray(trap)
     })
   };
 
-  postJSON(myJSON)
+  // controllerDb.postJSON(myJSON)
 
 
-  controllerDb.deleteEverything = async function () {
+  controllerDb.deleteEverything = async function (req, res) {
   await Trap.destroy({ truncate: true, cascade: true }) 
     .then(() => {
+      res.status = 201
+      res.send('DB deleted')
       console.log('All records deleted successfully');
     })
     .catch((err) => {
