@@ -9,9 +9,11 @@ import Stamp from './main-info/stamp';
 import Tornado from './main-info/tornado';
 import Context from '../../context';
 import '../../App.css';
+import { config } from 'dotenv';
 
+config();
 
-const API_KEY = 'YOUR KEY';
+const API_KEY = process.env.GOOGLE_MAP_KEY;
 
 function Dashboard() {
   const [horizonCount, setHorizonCount] = useState(1);

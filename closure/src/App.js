@@ -11,8 +11,6 @@ import Dashboard from './components/dashboard/dashboard';
 import Support from './components/support';
 
 
-
-
 function App() {
 
   const url = 'http://localhost:3009'
@@ -20,6 +18,7 @@ function App() {
   //Map variables
   const [mainLat, setMainLat] = useState('')
   const [mainLong, setMainLong] = useState('')
+
 
   //Parameters variables
   //square
@@ -51,6 +50,7 @@ function App() {
   const [minVolFactor, setMinVolFactor] = useState('')
   const [medVolFactor, setMedVolFactor] = useState('')
   const [maxVolFactor, setMaxVolFactor] = useState('')
+
 
   //JSON from calculators
   const [poroJSON, setPoroJSON] = useState({})
@@ -347,10 +347,6 @@ function App() {
       setMedRes (Math.round(reserves[indexMaxProb]))
     }
   }
-
-
-  useEffect(() => console.log(minRes, medRes, maxRes), [minRes, medRes, maxRes])
-
 
   return (
     <Context.Provider value={{ 

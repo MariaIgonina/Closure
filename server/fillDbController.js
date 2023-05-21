@@ -50,8 +50,6 @@ async function postNewTrapInArray (el) {
     })
   };
 
-  // controllerDb.postJSON(myJSON)
-
 
   controllerDb.deleteEverything = async function (req, res) {
   await Trap.destroy({ truncate: true, cascade: true }) 

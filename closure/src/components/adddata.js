@@ -1,8 +1,9 @@
 import React from 'react';
 import '../add.css'
 import '../App.css'
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef } from 'react';
 import Context from '../context';
+import { TextField, Alert } from '@mui/material';
 
 function Add () {
   const { url } = useContext(Context)
@@ -24,6 +25,13 @@ function Add () {
   const [contact, setContact] = useState('')
   const [notes, setNotes] = useState('')
 
+  const [error, setError] = useState('');
+  const [errorDec, setErrorDec] = useState('');
+  const [success, setSuccess] = useState(false);
+
+  //to reset the form
+  const formRef = useRef(null);
+
   async function postTrapToDB (trap) {
     const response = await fetch(url + '/traps', {
       method: "POST",
@@ -36,9 +44,9 @@ function Add () {
     return data;
   };
   
-  function submitTrap(trap) {
-    trap.preventDefault()
-    
+  function submitTrap(event) {
+    event.preventDefault()
+
     const newTrap = { 
       name, 
       basin,
@@ -57,164 +65,207 @@ function Add () {
       notes,
       contact 
     }
-    
-    postTrapToDB(newTrap)
-    console.log(newTrap)
 
-    setName('')
-    setLat('')
-    setLong('')
-    setBasin('')
-    setFormation('')
-    setHorizon('')
-    setReservoir('')
-    setDepth('')
-    setSquare('')
-    setHeff('')
-    setPorosity('')
-    setSaturation('')
-    setDensity('')
-    setVolFactor('')
-    setContact('')
-    setNotes('')
+    const isFormValid = Object.values(newTrap).every((value) => value !== "");
+    
+    if (newTrap.porosity < 0 || newTrap.porosity > 1 ||
+        newTrap.saturation < 0 || newTrap.saturation > 1 ||
+        newTrap.volumefactor < 0 || newTrap.volumefactor > 1 ||
+        newTrap.density < 0 || newTrap.density > 1 ) 
+    {
+      setErrorDec('Required meaning from 0 to 1');
+    } else setErrorDec('');
+
+    if (isFormValid && errorDec === '') {
+      postTrapToDB(newTrap);
+      setSuccess(true);
+      setError('');
+      formRef.current.reset();
+    } else {
+      setError('All fields are required');
+    }
   };
 
   return (
-<div class="add-window">
-  <form onSubmit={submitTrap}>
-    <div class="big-columns">
-      <div class="basic-info">
-        <h2>Basic Information</h2>
+  <div class="add-window">
+    <form
+      ref={formRef}
+      onSubmit={submitTrap}
+      className="form"
+    >
 
-        <input
-          placeholder="Name"
-          class="add-input"
-          value={name}
-          onChange={(text) => setName(text.target.value)}
-        ></input>
+      <div class="big-columns">
+      
+        <div class="basic-info-add">
+          <h2 class="add-header">Basic Information</h2>
 
-        <div class="input-coordinates">
-          <input
-            placeholder="Latitude"
-            class="add-input"
-            value={lat}
-            onChange={(text) => setLat(text.target.value)}
-          ></input>
+          <TextField 
+            id="Name"
+            size="small" 
+            label="Name" 
+            variant="outlined"
+            margin="dence"
+            onChange={(text) => setName(text.target.value)}
+          />
 
-          <input
-            placeholder="Longitude"
-            class="add-input"
-            value={long}
-            onChange={(text) => setLong(text.target.value)}
-          ></input>
+          <div class="input-coordinates">
+            
+            <TextField 
+              id="Latitude"
+              size="small" 
+              label="Latitude, WGS84" 
+              variant="outlined"
+              margin="normal"
+              onChange={(text) => setLat(text.target.value)}
+            />
+
+            <TextField 
+              id="Longitude"
+              size="small" 
+              label="Longitude, WGS84" 
+              variant="outlined"
+              margin="normal"
+              onChange={(text) => setLong(text.target.value)}
+            />
+
+          </div>
+
+          <TextField 
+            id="Basin"
+            size="small" 
+            label="Basin" 
+            variant="outlined"
+            margin="normal"
+            onChange={(text) => setBasin(text.target.value)}
+          />
+          
+          <TextField 
+            id="Formation"
+            size="small" 
+            label="Formation" 
+            variant="outlined"
+            margin="normal"
+            onChange={(text) => setFormation(text.target.value)}
+          />
+
+          <TextField 
+            id="Horizon"
+            size="small" 
+            label="Horizon" 
+            variant="outlined" 
+            margin="normal"
+            onChange={(text) => setHorizon(text.target.value)}
+          />
+
+          <TextField 
+            id="Reservoir"
+            size="small" 
+            label="Reservoir" 
+            variant="outlined"
+            margin="normal"
+            onChange={(text) => setReservoir(text.target.value)}
+          />
+
+          <TextField 
+            id="Medium depth"
+            size="small" 
+            label="Medium depth, m" 
+            variant="outlined"
+            margin="normal"
+            onChange={(text) => setDepth(text.target.value)}
+          />
+        </div>
+      
+        <div class="rest-info">
+          <h2 class="add-header">Effective Volume, m</h2>
+
+           <TextField 
+            id="Square"
+            size="small" 
+            label="Square, k m²" 
+            variant="outlined"
+            margin="dence"
+            onChange={(text) => setSquare(text.target.value)}
+          />
+
+          <TextField 
+            id="Effective Thickness"
+            size="small" 
+            label="Effective Thickness, m" 
+            variant="outlined"
+            margin="normal"
+            onChange={(text) => setHeff(text.target.value)}
+          />
+
+          <h2 class="add-header">Petrophysical Parameters</h2>
+
+          <TextField 
+            id="Porosity"
+            size="small" 
+            label="Porosity, dec" 
+            variant="outlined"
+            margin="dence"
+            onChange={(text) => setPorosity(text.target.value)}
+          />
+
+          <TextField
+            id="Saturation"
+            size="small" 
+            label="Saturation, dec" 
+            variant="outlined"
+            margin="normal"
+            onChange={(text) => setSaturation(text.target.value)}
+          />
+
+          <h2 class="add-header">Physico-chemical Parameters</h2>
+
+          <TextField 
+            id="Density"
+            size="small" 
+            label="Density, g/cm³" 
+            variant="outlined"
+            margin="dence"
+            onChange={(text) => setDensity(text.target.value)}
+          />
+
+          <TextField 
+            id="Reciprocal volume factor"
+            size="small" 
+            label="Reciprocal volume factor, dec" 
+            variant="outlined"
+            margin="normal"
+            onChange={(text) => setVolFactor(text.target.value)}
+          />
         </div>
 
-        <input
-          placeholder="Basin"
-          class="add-input"
-          value={basin}
-          onChange={(text) => setBasin(text.target.value)}
-        ></input>
+        <div class="contact">
+          <h2 class="add-header">Contact</h2>
 
-        <input
-          placeholder="Formation"
-          class="add-input"
-          value={formation}
-          onChange={(text) => setFormation(text.target.value)}
-        ></input>
+          <TextField 
+            id="Email"
+            size="small" 
+            label="Email" 
+            variant="outlined"
+            margin="dence"
+            onChange={(text) => setContact(text.target.value)}
+          />
 
-        <input
-          placeholder="Horizon"
-          class="add-input"
-          value={horizon}
-          onChange={(text) => setHorizon(text.target.value)}
-        ></input>
+          <h2 class="notes">Notes</h2>
+          <textarea
+            placeholder="What did you notice working with this target?"
+            class="add-textarea"
+            value={notes}
+            onChange={(text) => setNotes(text.target.value)}
+          ></textarea>
 
-        <input
-          placeholder="Reservoir"
-          class="add-input"
-          value={reservoir}
-          onChange={(text) => setReservoir(text.target.value)}
-        ></input>
 
-        <input
-          placeholder="Medium depth"
-          class="add-input"
-          value={depth}
-          onChange={(text) => setDepth(text.target.value)}
-        ></input>
+          {error && <Alert severity="error">{error}</Alert>}
+          {errorDec && <Alert severity="error">{errorDec}</Alert>}
+          {(success == true) && <Alert severity="success">Your data is in the data base!</Alert>}
+        </div>
       </div>
 
-      <div class="rest-info">
-        <h2>Effective Volume</h2>
-
-        <input
-          placeholder="Square"
-          class="add-input"
-          value={square}
-          onChange={(text) => setSquare(text.target.value)}
-        ></input>
-
-        <input
-          placeholder="Effective Thickness"
-          class="add-input"
-          value={heff}
-          onChange={(text) => setHeff(text.target.value)}
-        ></input>
-
-        <h2>Petrophysical Parameters</h2>
-
-        <input
-          placeholder="Porosity"
-          class="add-input"
-          value={porosity}
-          onChange={(text) => setPorosity(text.target.value)}
-        ></input>
-
-        <input
-          placeholder="Saturation"
-          class="add-input"
-          value={saturation}
-          onChange={(text) => setSaturation(text.target.value)}
-        ></input>
-
-        <h2>Phisico-chemical Parameters</h2>
-
-        <input
-          placeholder="Density"
-          class="add-input"
-          value={density}
-          onChange={(text) => setDensity(text.target.value)}
-        ></input>
-
-        <input
-          placeholder="Reciprocal volume factor"
-          class="add-input"
-          value={volumefactor}
-          onChange={(text) => setVolFactor(text.target.value)}
-        ></input>
-      </div>
-
-      <div class="contact">
-        <h2>Contact</h2>
-
-        <input
-          placeholder="Email"
-          class="add-input"
-          value={contact}
-          onChange={(text) => setContact(text.target.value)}
-        ></input>
-
-        <h2>Here you can write some notes (optional)</h2>
-        <textarea
-          placeholder="Write something..."
-          class="add-textarea"
-          value={notes}
-          onChange={(text) => setNotes(text.target.value)}
-        ></textarea>
-      </div>
-    </div>
-
+      
 
         <button className='adddata'>
         Add data

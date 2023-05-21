@@ -14,7 +14,7 @@ const { minHeff, medHeff, maxHeff } = useContext(Context)
   return (
 
     <div className="param-box">
-      <h3 className='param-headers-dist'>Effective thickness</h3>
+      <h3 className='param-headers-dist'>Effective thickness, m</h3>
       <ChartHeff></ChartHeff>
       <div className='param-info'>
         <div className="col-params">

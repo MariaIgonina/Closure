@@ -23,38 +23,36 @@ function MainInputs (props) {
 
       <label for="select-basin" class="labels-main-input">Basin</label>
       <select 
-      placeholder='Basin'
-      className='select-basin'
-      onChange={ (e) => callFormations(e.target.value) }
+        placeholder='Basin'
+        className='select-basin'
+        onChange={ (e) => callFormations(e.target.value) }
       > 
         {basins.map(el => (
           <option value={el}>{el}</option>
         ))}
       </select>
 
-      <div className='coordinates'>
-      
-      <label for="coord-input" class="labels-main-input">Longtitude</label>
-      <input 
-        required
-        placeholder='Enter latitude'
-        className='coord-input'
-        value={mainLat} 
-        onChange={text => setMainLat(Number(text.target.value))}
-        ></input>
+      <div className='coordinates'>   
+        <label for="coord-input" class="labels-main-input">Longtitude</label>
+        <input 
+          required
+          placeholder='Enter latitude'
+          className='coord-input'
+          value={mainLat} 
+          onChange={text => setMainLat(Number(text.target.value))}
+          ></input>
 
         <label for="coord-input" class="labels-main-input">Latitude</label>
         <input 
-        required
-        placeholder='Enter longtitude'
-        className='coord-input'
-        value={mainLong} 
-        onChange={text => setMainLong(Number(text.target.value))}
+          required
+          placeholder='Enter longtitude'
+          className='coord-input'
+          value={mainLong} 
+          onChange={text => setMainLong(Number(text.target.value))}
         >
         </input>
       </div>
       
-     
     </div>
   );
 };

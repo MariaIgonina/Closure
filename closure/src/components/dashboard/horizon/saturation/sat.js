@@ -14,7 +14,7 @@ const { minSat, medSat, maxSat } = useContext(Context)
   return (
 
     <div className="param-box">
-      <h3 className='param-headers-dist'>Saturation</h3>
+      <h3 className='param-headers-dist'>Saturation, dec</h3>
       <ChartSat></ChartSat>
       {/* <img src={distr} alt="distr" className='distr'/> */}
       <div className='param-info'>

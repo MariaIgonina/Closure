@@ -15,7 +15,7 @@ const {minPoro, medPoro, maxPoro} = useContext(Context)
   return (
 
     <div className="param-box">
-      <h3 className='param-headers-dist'>Porosity</h3>
+      <h3 className='param-headers-dist'>Porosity, dec</h3>
       <ChartPoro></ChartPoro>
       {/* <img src={distr} alt="distr" className='distr'/> */}
       <div className='param-info'>

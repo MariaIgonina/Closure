@@ -15,7 +15,7 @@ const { minDensity, medDensity, maxDensity } = useContext(Context)
   return (
 
     <div className="param-box">
-      <h3 className='param-headers-dist'>Density</h3>
+      <h3 className='param-headers-dist'>Density, g/cm³</h3>
       <ChartDens></ChartDens>
       {/* <img src={distr} alt="distr" className='distr'/> */}
       <div className='param-info'>

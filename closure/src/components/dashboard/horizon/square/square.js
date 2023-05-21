@@ -19,7 +19,7 @@ const { minSquare,
   return (
 
     <div className="param-box">
-      <h3 className='param-headers-dist'>Square</h3>
+      <h3 className='param-headers-dist'>Square, k m²</h3>
       <ChartSquare></ChartSquare>
       {/* <img src={distr} alt="distr" className='distr'/> */}
       

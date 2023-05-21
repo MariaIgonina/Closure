@@ -86,7 +86,6 @@
   text-align: center;
   text-decoration: none;
   transition: color 100ms;
-  /* vertical-align: baseline; */
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -96,13 +95,6 @@
 .closepopup:focus {
   background-color: #7dc4c3;
 }
-
-
-
-
-
-
-
 
 .all-help {
   position: fixed;

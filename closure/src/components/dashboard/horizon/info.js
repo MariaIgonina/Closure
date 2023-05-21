@@ -89,7 +89,7 @@ function Info () {
       <h4 className='param-headers'>Type of reservoir</h4>
       <div className='infoparam'>{typeRes}</div>
 
-      <h4 className='param-headers'>Depth</h4>
+      <h4 className='param-headers'>Depth, m</h4>
       <div className='infoparam'>{Math.round(depth)}</div>
 
       <div className='gcos-group'>

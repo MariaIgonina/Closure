@@ -23,15 +23,12 @@ const mapSettings = {
   KeyboardShortcuts: false,
   styles: mapTheme,
   zoomControl: false
-    }
+  }
 
 
 function Map () {
 
   const { mainLat, mainLong, filteredData } = useContext(Context)
-  
-  // useEffect(() => {console.log(filteredData)}, [filteredData]
-  // )
 
   const mapRef = React.useRef(undefined)
 
@@ -44,43 +41,40 @@ function Map () {
     mapRef.current = undefined
   }, [])
 
-  
-  
-    return (
-      <div className={styles.container}>
+  return (
+    <div className={styles.container}>
 
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={{lat: mainLat, lng: mainLong}}
-          zoom={4}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={mapSettings}
-        >
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={{lat: mainLat, lng: mainLong}}
+        zoom={4}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        options={mapSettings}
+      >
 
-          { mainLat.length === 0 ?
+        { mainLat.length === 0 ?
+        <Marker 
+          position={{lat: 41.395100, lng: 2.197412}} 
+          className='marker'/> :
+        <Marker 
+          position={{lat: mainLat, lng: mainLong}} 
+          className='marker'
+          
+          
+          /> }
+        { filteredData.length !== 0 && filteredData.map((el) => {
+          return (
           <Marker 
-            position={{lat: 41.395100, lng: 2.197412}} 
-            className='marker'/> :
-          <Marker 
-            position={{lat: mainLat, lng: mainLong}} 
-            className='marker'
-            
-            
-            /> }
-          { filteredData.length !== 0 && filteredData.map((el) => {
-            return (
-            <Marker 
-            position={{lat: Number(el.lat), lng: Number(el.long)}} 
-            className='marker-analog'
-            />
-          )}) } 
+          position={{lat: Number(el.lat), lng: Number(el.long)}} 
+          className='marker-analog'
+          />
+        )}) } 
 
-        </GoogleMap>
+      </GoogleMap>
 
-      </div>
-    );
-  };
-  
-  export default Map
-  
+    </div>
+  );
+};
+
+export default Map

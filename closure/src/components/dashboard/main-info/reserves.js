@@ -32,7 +32,7 @@ function ChartRes() {
 
   return (
     <div className="reserves-box">
-      <h3 className="headers">Final reserves of oil</h3>
+      <h3 className="headers">Final reserves of oil, k t</h3>
       <BarChart 
           width={200} 
           height={200} 
