@@ -9,18 +9,14 @@ import Stamp from './main-info/stamp';
 import Tornado from './main-info/tornado';
 import Context from '../../context';
 import '../../App.css';
-import { config } from 'dotenv';
 
-config();
-
-const API_KEY = process.env.GOOGLE_MAP_KEY;
 
 function Dashboard() {
   const [horizonCount, setHorizonCount] = useState(1);
   const { calculate } = useContext(Context);
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: API_KEY,
+    googleMapsApiKey: process.env.REACT_APP_API_KEY,
     language: 'en'
   });
 

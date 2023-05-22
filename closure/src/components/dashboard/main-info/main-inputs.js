@@ -11,7 +11,7 @@ function MainInputs (props) {
   const { mainLat, mainLong, setMainLat, setMainLong, callFormations, gcos } = useContext(Context)
 
   const [basins, setBasins] = useState([
-    'West-Siberian','Permian','East-Siberian'
+    '---', 'West-Siberian','Permian','East-Siberian'
   ])
   
   return (
