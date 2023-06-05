@@ -7,6 +7,12 @@
   height: 100vh;
 }
 
+.all-dashboard {
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 #logo {
   height: 50px;
   margin: 10px;
@@ -43,22 +49,23 @@
 .main-info {
   display: flex;
   margin: 10px;
-  /* flex-direction: row; */
+  flex-direction: row;
   padding: 20px;
   height: 320px;
   align-items: stretch;
-  /* max-width: 300px; */
-  /* border-color: #36A9AE; */
+  flex-grow: 1;
+  width: 100%;
+  justify-content: center;
 }
 
 .reserves-box {
   display: flex;
+  flex-grow: 0.4;
   flex-direction: column;
   margin-left: 20px;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  /* background-color: white; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 10px;
   min-width: 250px;
@@ -76,13 +83,14 @@
   border-radius: 10px;
   flex-shrink: 2;
   min-width: 200px;
+  max-width: 220px;
 }
 
 .box-date {
   display: flex;
   flex-direction: column;
   margin-left: 20px;
-  background-color: #B9CDCB;
+  background-color: #db8378;
   padding: 20px; 
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -90,18 +98,23 @@
   margin-bottom: 15px;
   height: 115px;
   margin-top: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: 190px;
 }
 
 .authors {
   display: flex;
   flex-direction: column;
   margin-left: 20px;
-  background-color: #ffc7b0;
+  background-color: #6b9f9e;
   padding: 20px;
+  padding-bottom: 10px;
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 10px;
-  height: 140px;
+  flex-grow: 1;
 }
 
 .inputs {
@@ -134,12 +147,6 @@
   color: #4B8180;
 }
 
-
-
-
-
-
-
 .coord-input {
   margin-bottom: 20px;
   border-bottom: 1px solid #ccc;
@@ -153,7 +160,6 @@
   color: #4B8180
 }
 
-
 .name-input:valid,
 .name-input:focus,
 .coord-input:valid,
@@ -166,10 +172,8 @@
 .author:focus
 
  {
-  border: 1px transparent; /* устанавливаем белый цвет границы, когда инпут заполнен или в фокусе */
+  border: 1px transparent; 
 }
-
-
 
 .name-input::placeholder,
 .coord-input::placeholder {
@@ -191,10 +195,10 @@
   border-left: transparent;
   border-right-color: transparent;
   width: 180px;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 500;
   background-color: transparent;
-  color:rgb(110, 110, 110)
+  color:rgb(255, 255, 255)
 }
 
 .date {
@@ -225,6 +229,7 @@
   border-radius: 10px;
   height: 320px;
   min-width: 280px;
+  flex-grow: 0.2;
 }
 
 .headers {
@@ -236,7 +241,7 @@
 
 .headers-s {
   color:#2C504F;
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 20;
   margin-left: 20px;
 }
@@ -289,12 +294,16 @@
   margin-left: 10px;
   flex-direction: row;
   border-radius: 10px;
+  align-items: stretch;
+  width: 100%;
+  flex-grow: 1;
 }
 
 .params {
   justify-content: space-between;
   flex-grow: 1;
   display: flex;
+  align-items: stretch;
   margin: 10px;
   flex-direction: column;
   padding: 20px;
@@ -302,7 +311,8 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 10px;
   height: 330px;
-  margin-right: 20px;
+  margin-right: 30px;
+  margin-bottom: 30px;
 }
 
 .param-headers {
@@ -311,6 +321,14 @@
   font-size: 14px;
   font-weight: 600;
   color: rgb(131, 131, 131)
+}
+
+.auth-headers {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(255, 255, 255)
 }
 
 .param-headers-dist {
@@ -339,11 +357,11 @@
 
 .info-horizon {
   display: flex;
-  width: 300px;
-  min-width: 190px;
-  min-width: 210px;
+  align-items: stretch;
+  width: 250px;
+  max-width: 210px;
   margin: 10px;
-  margin-left: 20px;
+  margin-left: 30px;
   flex-direction: column;
   padding: 20px;
   background-color: white;
@@ -432,9 +450,9 @@ p {
 }
 
 .img-support {
-  width: 250px;
+  width: 200px;
   height: 250px;
-  border-radius: 50%;
+  border-radius: 10%;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
   margin-left: 500px;
 }
@@ -446,28 +464,18 @@ p {
   box-sizing: border-box;
   color: #FFFFFF;
   cursor: pointer;
-  display: inline-block;
   font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 500;
   height: 40px;
   line-height: 20px;
-  list-style: none;
   margin: 0;
-  outline: none;
   padding: 10px 16px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
   transition: color 100ms;
-  vertical-align: baseline;
-  user-select: none;
-  -webkit-user-select: none;
   touch-action: manipulation;
   position: relative;
   text-align: center;
   justify-content: center;
-  margin-left:800px;
   width: 120px;
 }
 
@@ -562,7 +570,6 @@ p {
   justify-content: space-evenly;
 }
 
-
 .input-square-min,
 .input-square-med,
 .input-square-max {
@@ -624,26 +631,73 @@ p {
   font-weight: 500;
   height: 40px;
   line-height: 20px;
-  list-style: none;
   margin: 0;
-  outline: none;
   padding: 10px 16px;
   position: relative;
   text-align: center;
   text-decoration: none;
   transition: color 100ms;
   vertical-align: baseline;
-  user-select: none;
-  -webkit-user-select: none;
   touch-action: manipulation;
   position: relative;
   text-align: center;
   justify-content: center;
-  margin-top: 10px;
-  margin-left:50px
+  display: flex;
+  margin-left: 20px;
+  /* padding-bottom: 5px; */
+}
+
+.export-text {
+  color: white;
+  text-align: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  bottom: 4px;
 }
 
 .export:hover, 
 .export:focus {
   background-color: #7dc4c3;
+}
+
+.popup-help {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.helperror {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.basic-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.gcos-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.scrollable-list {
+  margin-top: 10px;
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.field-name {
+  margin-bottom: 5px;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.list-helpers {
+  list-style: none;
 }

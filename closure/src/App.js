@@ -9,6 +9,8 @@ import Navbar from './components/navbar'
 import Add from './components/adddata';
 import Dashboard from './components/dashboard/dashboard';
 import Support from './components/support';
+import { Alert } from '@mui/material';
+import PrintButton from './components/dashboard/pdfSaving';
 
 
 function App() {
@@ -74,6 +76,11 @@ function App() {
   const [medRes, setMedRes] = useState('')
   const [maxRes, setMaxRes] = useState('')
 
+  //Errors
+  const [errorSelects, setErrorSelects] = useState('')
+  const [errorGcos, setErrorGcos] = useState('')
+  const [errorSquare, setErrorSquare] = useState('')
+
 
   // We chose the basin, getting formations
   async function callFormations (basin) {
@@ -81,7 +88,7 @@ function App() {
     const allFormations = await response.json()
 
     //Creating options for the new droplist
-    const allFormationsArray = []
+    const allFormationsArray = ['---']
     allFormations.forEach(element => {
       allFormationsArray.push(element.formation)
     });
@@ -98,7 +105,7 @@ function App() {
     const allHorizons = await response.json()
 
     //Creating options for the new droplist
-    const allHorizonsArray = []
+    const allHorizonsArray = ['---']
     allHorizons.forEach(element => {
       allHorizonsArray.push(element.horizon)
     });
@@ -170,184 +177,217 @@ function App() {
 
   async function calculate() {
     const urlPython = 'http://localhost:5000/';
-  
-    // PORO
-    async function postPoroToPython({ poroMin, poroMed, poroMax }) {
-      const response = await fetch(urlPython + 'poro', {
-        method: 'POST',
-        body: JSON.stringify({ poroMin, poroMed, poroMax }),
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-  
-      const parsed = await response.json();
-      return parsed;
-    }
-  
-    // HEFF
-    async function postHeffToPython({ heffMin, heffMed, heffMax }) {
-      const response = await fetch(urlPython + 'heff', {
-        method: 'POST',
-        body: JSON.stringify({ heffMin, heffMed, heffMax }),
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-  
-      const parsed = await response.json();
-      return parsed;
-    }
-
-    // SATURATION
-    async function postSatToPython({ satMin, satMed, satMax }) {
-      const response = await fetch(urlPython + 'sat', {
-        method: 'POST',
-        body: JSON.stringify({ satMin, satMed, satMax }),
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-  
-      const parsed = await response.json();
-      return parsed;
-    }
-
-    //DENSITY
-    async function postDensityToPython({ densityMin, densityMed, densityMax }) {
-      const response = await fetch(urlPython + 'density', {
-        method: 'POST',
-        body: JSON.stringify({ densityMin, densityMed, densityMax }),
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-  
-      const parsed = await response.json();
-      return parsed;
-    }
-
-    // VOLUME FACTOR
-    async function postVolFactToPython({ volFactorMin, volFactorMed, volFactorMax }) {
-      const response = await fetch(urlPython + 'volfactor', {
-        method: 'POST',
-        body: JSON.stringify({ volFactorMin, volFactorMed, volFactorMax }),
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-  
-      const parsed = await response.json();
-      return parsed;
-    }
-
-    // SQUARE
-    async function postSquareToPython({ squareMin, squareMed, squareMax }) {
-      const response = await fetch(urlPython + 'square', {
-        method: 'POST',
-        body: JSON.stringify({ squareMin, squareMed, squareMax }),
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-  
-      const parsed = await response.json();
-      return parsed;
-    }
-
-    // RESERVES
-    async function postEverythingToPython({ 
-      squareMin, 
-      squareMed, 
-      squareMax,
-      heffMin, 
-      heffMed, 
-      heffMax,
-      poroMin, 
-      poroMed, 
-      poroMax,
-      satMin, 
-      satMed, 
-      satMax,
-      densityMin, 
-      densityMed, 
-      densityMax,
-      volFactorMin, 
-      volFactorMed, 
-      volFactorMax,
-      gcos
-    }) {
-      const response = await fetch(urlPython + 'montecarlo', {
-        method: 'POST',
-        body: JSON.stringify({ 
-          squareMin, 
-          squareMed, 
-          squareMax,
-          heffMin, 
-          heffMed, 
-          heffMax,
-          poroMin, 
-          poroMed, 
-          poroMax,
-          satMin, 
-          satMed, 
-          satMax,
-          densityMin, 
-          densityMed, 
-          densityMax,
-          volFactorMin, 
-          volFactorMed, 
-          volFactorMax,
-          gcos 
-        }),
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
-  
-      const parsed = await response.json();
-      return parsed;
-    }
-  
-    const [ poroJSON, heffJSON, satJSON, densityJSON, volFactorJSON, squareJSON, reservesJSON ] = await Promise.all([
-      postPoroToPython({ poroMin: minPoro, poroMed: medPoro, poroMax: maxPoro }),
-      postHeffToPython({ heffMin: minHeff, heffMed: medHeff, heffMax: maxHeff }),
-      postSatToPython({ satMin: minSat, satMed: medSat, satMax: maxSat }),
-      postDensityToPython({ densityMin: minDensity, densityMed: medDensity, densityMax: maxDensity }),
-      postVolFactToPython({ volFactorMin: minVolFactor, volFactorMed: medVolFactor, volFactorMax: maxVolFactor }),
-      postSquareToPython({ squareMin: minSquare, squareMed: medSquare, squareMax: maxSquare }),
-      postEverythingToPython({
-        squareMin: minSquare, squareMed: medSquare, squareMax: maxSquare,
-        heffMin: minHeff, heffMed: medHeff, heffMax: maxHeff,
-        poroMin: minPoro, poroMed: medPoro, poroMax: maxPoro,
-        satMin: minSat, satMed: medSat, satMax: maxSat,
-        densityMin: minDensity, densityMed: medDensity, densityMax: maxDensity,
-        volFactorMin: minVolFactor, volFactorMed: medVolFactor, volFactorMax: maxVolFactor,
-        gcos: gcos
-      })
-    ]);
-  
-    setPoroJSON(poroJSON);
-    setHeffJSON(heffJSON);
-    setSatJSON(satJSON);
-    setDensityJSON(densityJSON);
-    setVolFactorJSON(volFactorJSON);
-    setSquareJSON(squareJSON);
-    setReservesJSON(reservesJSON)
     
-    //Estimate reserves
-    if (reservesJSON.length !== 0) {
-      const reserves = reservesJSON.labels
-      setMinRes (Math.round(Math.min.apply(null, reserves)))
-      setMaxRes (Math.round(Math.max.apply(null, reserves)))
+    if (
+      
+      minHeff == '' ||
+      medHeff == '' ||
+      maxHeff == '' ||
+      minPoro == '' ||
+      medPoro == '' ||
+      maxPoro == '' ||
+      minSat == '' ||
+      medSat == '' ||
+      maxSat == '' ||
+      minDensity == '' ||
+      medDensity == '' ||
+      maxDensity == '' ||
+      minVolFactor == '' ||
+      medVolFactor == '' ||
+      maxVolFactor == '' ||
+      gcos == 0
+    ) {
+      setErrorSelects('Please choose basin, formation and horizon!');
+    } else if (
+      minSquare == '' ||
+      medSquare == '' ||
+      maxSquare == ''
+    ) {
+      setErrorSquare('Please enter min, med and max square!');
+    } else if (
+      gcos == 0
+    ) {
+      setErrorGcos('GCoS has to be more than 0!');
+    } else {
+
+      // PORO
+      async function postPoroToPython({ poroMin, poroMed, poroMax }) {
+        const response = await fetch(urlPython + 'poro', {
+          method: 'POST',
+          body: JSON.stringify({ poroMin, poroMed, poroMax }),
+          headers: {
+            'content-type': 'application/json',
+          },
+        });
+    
+        const parsed = await response.json();
+        return parsed;
+      }
   
-      const probabilities = reservesJSON.values
-      const maxProb = Math.max.apply(null, probabilities)
-      const indexMaxProb = probabilities.indexOf(maxProb)
-      setMedRes (Math.round(reserves[indexMaxProb]))
+      // HEFF
+      async function postHeffToPython({ heffMin, heffMed, heffMax }) {
+        const response = await fetch(urlPython + 'heff', {
+          method: 'POST',
+          body: JSON.stringify({ heffMin, heffMed, heffMax }),
+          headers: {
+            'content-type': 'application/json',
+          },
+        });
+  
+        const parsed = await response.json();
+        return parsed;
+      }
+
+      // SATURATION
+      async function postSatToPython({ satMin, satMed, satMax }) {
+        const response = await fetch(urlPython + 'sat', {
+          method: 'POST',
+          body: JSON.stringify({ satMin, satMed, satMax }),
+          headers: {
+            'content-type': 'application/json',
+          },
+        });
+    
+        const parsed = await response.json();
+        return parsed;
+      }
+
+      //DENSITY
+      async function postDensityToPython({ densityMin, densityMed, densityMax }) {
+        const response = await fetch(urlPython + 'density', {
+          method: 'POST',
+          body: JSON.stringify({ densityMin, densityMed, densityMax }),
+          headers: {
+            'content-type': 'application/json',
+          },
+        });
+    
+        const parsed = await response.json();
+        return parsed;
+      }
+
+      // VOLUME FACTOR
+      async function postVolFactToPython({ volFactorMin, volFactorMed, volFactorMax }) {
+        const response = await fetch(urlPython + 'volfactor', {
+          method: 'POST',
+          body: JSON.stringify({ volFactorMin, volFactorMed, volFactorMax }),
+          headers: {
+            'content-type': 'application/json',
+          },
+        });
+    
+        const parsed = await response.json();
+        return parsed;
+      }
+
+      // SQUARE
+      async function postSquareToPython({ squareMin, squareMed, squareMax }) {
+        const response = await fetch(urlPython + 'square', {
+          method: 'POST',
+          body: JSON.stringify({ squareMin, squareMed, squareMax }),
+          headers: {
+            'content-type': 'application/json',
+          },
+        });
+    
+        const parsed = await response.json();
+        return parsed;
+      }
+
+      // RESERVES
+      async function postEverythingToPython({ 
+        squareMin, 
+        squareMed, 
+        squareMax,
+        heffMin, 
+        heffMed, 
+        heffMax,
+        poroMin, 
+        poroMed, 
+        poroMax,
+        satMin, 
+        satMed, 
+        satMax,
+        densityMin, 
+        densityMed, 
+        densityMax,
+        volFactorMin, 
+        volFactorMed, 
+        volFactorMax,
+        gcos
+      }) {
+        const response = await fetch(urlPython + 'montecarlo', {
+          method: 'POST',
+          body: JSON.stringify({ 
+            squareMin, 
+            squareMed, 
+            squareMax,
+            heffMin, 
+            heffMed, 
+            heffMax,
+            poroMin, 
+            poroMed, 
+            poroMax,
+            satMin, 
+            satMed, 
+            satMax,
+            densityMin, 
+            densityMed, 
+            densityMax,
+            volFactorMin, 
+            volFactorMed, 
+            volFactorMax,
+            gcos 
+          }),
+          headers: {
+            'content-type': 'application/json',
+          },
+        });
+    
+        const parsed = await response.json();
+        return parsed;
+      }
+    
+      const [ poroJSON, heffJSON, satJSON, densityJSON, volFactorJSON, squareJSON, reservesJSON ] = await Promise.all([
+        postPoroToPython({ poroMin: minPoro, poroMed: medPoro, poroMax: maxPoro }),
+        postHeffToPython({ heffMin: minHeff, heffMed: medHeff, heffMax: maxHeff }),
+        postSatToPython({ satMin: minSat, satMed: medSat, satMax: maxSat }),
+        postDensityToPython({ densityMin: minDensity, densityMed: medDensity, densityMax: maxDensity }),
+        postVolFactToPython({ volFactorMin: minVolFactor, volFactorMed: medVolFactor, volFactorMax: maxVolFactor }),
+        postSquareToPython({ squareMin: minSquare, squareMed: medSquare, squareMax: maxSquare }),
+        postEverythingToPython({
+          squareMin: minSquare, squareMed: medSquare, squareMax: maxSquare,
+          heffMin: minHeff, heffMed: medHeff, heffMax: maxHeff,
+          poroMin: minPoro, poroMed: medPoro, poroMax: maxPoro,
+          satMin: minSat, satMed: medSat, satMax: maxSat,
+          densityMin: minDensity, densityMed: medDensity, densityMax: maxDensity,
+          volFactorMin: minVolFactor, volFactorMed: medVolFactor, volFactorMax: maxVolFactor,
+          gcos: gcos
+        })
+      ]);
+  
+      setPoroJSON(poroJSON);
+      setHeffJSON(heffJSON);
+      setSatJSON(satJSON);
+      setDensityJSON(densityJSON);
+      setVolFactorJSON(volFactorJSON);
+      setSquareJSON(squareJSON);
+      setReservesJSON(reservesJSON)
+      
+      //Estimate reserves
+      if (reservesJSON.length !== 0) {
+        const reserves = reservesJSON.labels
+        setMinRes (Math.round(Math.min.apply(null, reserves)))
+        setMaxRes (Math.round(Math.max.apply(null, reserves)))
+    
+        const probabilities = reservesJSON.values
+        const maxProb = Math.max.apply(null, probabilities)
+        const indexMaxProb = probabilities.indexOf(maxProb)
+        setMedRes (Math.round(reserves[indexMaxProb]))
+      }
     }
   }
-
+  
   return (
     <Context.Provider value={{ 
       url, 
@@ -400,7 +440,10 @@ function App() {
       minRes,
       medRes,
       maxRes, 
-      calculate
+      calculate,
+      errorGcos,
+      errorSelects,
+      errorSquare
        }}>
 
       <div className='everything'>
@@ -409,18 +452,15 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route path= '/' element={<Dashboard />} />
+          <Route path= '/' element={<Dashboard id={'dashboard'}/>} />
           <Route path= '/adddata' element={<Add />} />
           <Route path= '/support' element={<Support />} />
+      
         </Routes>
       </div>
 
     </Context.Provider>
-
   );
 }
 
 export default App;
-
-
-

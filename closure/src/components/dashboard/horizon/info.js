@@ -54,9 +54,6 @@ function Info () {
               <HelpRequest
               popupHelpRequest={popupHelpRequest}
               ></HelpRequest>
-              {/* <button 
-              // className='helprequest' 
-              onClick={ popupHelpRequest }>Close</button> */}
             </div>
           )}
           </div>
@@ -106,10 +103,10 @@ function Info () {
           {isVisibleGcos && (
             <div className="popupGcos">
               <GCoS 
+              setGcos={setGcos}
               popupGcos={popupGcos}
               >
               </GCoS>
-              {/* <button onClick={ popupGcos }>Close</button> */}
             </div>
           )}
         </div>

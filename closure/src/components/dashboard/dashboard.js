@@ -9,11 +9,17 @@ import Stamp from './main-info/stamp';
 import Tornado from './main-info/tornado';
 import Context from '../../context';
 import '../../App.css';
-
+import PrintButton from './pdfSaving';
+import { Alert } from '@mui/material';
 
 function Dashboard() {
   const [horizonCount, setHorizonCount] = useState(1);
-  const { calculate } = useContext(Context);
+  const { 
+    calculate,
+    errorGcos,
+    errorSelects,
+    errorSquare
+    } = useContext(Context);
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.REACT_APP_API_KEY,
@@ -24,19 +30,8 @@ function Dashboard() {
     setHorizonCount(prevCount => prevCount + 1);
   };
 
-  // My pdf brakes everything :( it's better to recreate it
-  // const MyDoc = () => (
-  //   <Document>
-  //     <Page>
-  //       <View>
-  //         <Text>My Awesome PDF</Text>
-  //       </View>
-  //     </Page>
-  //   </Document>
-  // );
-
   return (
-    <>
+    <div className='all-dashboard' id='dashboard'>
       <div className="main-info">
         {isLoaded ? <Map className="map" /> : <h2>Your map is out of order</h2>}
         <MainInputs />
@@ -44,19 +39,29 @@ function Dashboard() {
         <Tornado />
         <Stamp />
       </div>
+      
       {[...Array(horizonCount)].map((_, i) => (
         <Horizon key={i} />
       ))}
+      
+      <div className='row'>
       <button className="calculate" onClick={() => calculate()}>
         Calculate
       </button>
       {/* <button onClick={handleAddHorizon}>Add horizon</button> */}
-      {/* <PDFDownloadLink document={<MyDoc />} fileName="my_document.pdf" className='export'>
-        {({ blob, url, loading, error }) =>
-          loading ? 'Loading document...' : 'Download PDF'
-        }
-      </PDFDownloadLink> */}
-    </>
+
+      <button className='export'>
+       {/* Print page */}
+      <PrintButton id={"dashboard"} label={"Print page"} />
+      
+      </button>
+
+      {errorSquare && <Alert severity="error">{errorSquare}</Alert>}
+      {errorSelects && <Alert severity="error">{errorSelects}</Alert>}
+      {errorGcos && <Alert severity="error">{errorGcos}</Alert>}
+    
+      </div>
+    </div>
   );
 }
 

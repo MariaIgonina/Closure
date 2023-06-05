@@ -4,12 +4,17 @@ import { GoogleMap, Marker } from '@react-google-maps/api'
 import mapTheme from './theme';
 import Context from '../../../context';
 import { useContext, useEffect } from 'react';
+import markers from '../../../img/marker.png'
+import markerBig from '../../../img/markerbig.png'
+import { height } from '@mui/system';
 
 const containerStyle = {
-  width: '500px',
+  minWidth: '500px',
   height: '320px',
   boxShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
-  borderRadius: '10px'
+  borderRadius: '10px',
+  display: 'flex',
+  flexGrow: '0.5'
 };
 
 const mapSettings = {
@@ -60,7 +65,7 @@ function Map () {
         <Marker 
           position={{lat: mainLat, lng: mainLong}} 
           className='marker'
-          
+          icon={{ url: markerBig }}
           
           /> }
         { filteredData.length !== 0 && filteredData.map((el) => {
@@ -68,6 +73,7 @@ function Map () {
           <Marker 
           position={{lat: Number(el.lat), lng: Number(el.long)}} 
           className='marker-analog'
+          icon={{ url: markers }}
           />
         )}) } 
 

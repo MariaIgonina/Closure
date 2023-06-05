@@ -34,7 +34,7 @@ function ChartRes() {
     <div className="reserves-box">
       <h3 className="headers">Final reserves of oil, k t</h3>
       <BarChart 
-          width={200} 
+          width={300} 
           height={200} 
           data={chartData} 
           margin={{ top: 5, right: 5, left: 0, bottom: 5 }}

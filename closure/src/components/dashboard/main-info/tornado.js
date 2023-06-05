@@ -74,7 +74,7 @@ const {
         <h3 className="headers-s">Sensitivity analysis</h3>
         <BarChart
           className="tornado-plot"
-          width={200}
+          width={280}
           height={200}
           data={sortedSensitivity}
           stackOffset="sign"
