@@ -6,7 +6,9 @@ Closure simplifies the process by aggregating all the necessary statistics about
 
 ## Demo
 
-Watch the video review of Closure on YouTube: [![Video Review](https://img.youtube.com/vi/pxMOGl9xbes/0.jpg)](https://www.youtube.com/watch?v=pxMOGl9xbes)
+Watch the video review of Closure on YouTube: 
+
+[![Video Review](https://img.youtube.com/vi/pxMOGl9xbes/0.jpg)](https://www.youtube.com/watch?v=pxMOGl9xbes)
 
 ## Prerequisites
 
