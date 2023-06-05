@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# Closure
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Closure is a comprehensive application that combines a verified user database, a smart calculator, and a dashboard creator into one powerful tool. It was specifically designed for petroleum geologists who often encounter challenges in estimating oil and gas reserves. This task is typically repetitive and time-consuming despite its simplicity. Professionals in this field need to select data for statistical analysis, perform calculations using specialized software, and present the results.
 
-## Available Scripts
+Closure simplifies the process by aggregating all the necessary statistics about oil targets. By specifying the area and formation, you can simply enter the range of squares, and the program generates a visually appealing dashboard that can be saved in PDF format.
 
-In the project directory, you can run:
+## Demo
 
-### `npm start`
+Watch the video review of Closure on YouTube: [Video Review](https://youtu.be/pxMOGl9xbes)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Before getting started, ensure that you have Node.js installed on your computer. Closure runs on Node.js v16. If you have a newer version installed, follow these steps in your terminal:
 
-### `npm test`
+1. Install Node.js v16: `nvm install 16`
+2. Use Node.js v16: `nvm use 16`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Backend Setup
 
-### `npm run build`
+The backend of Closure is built with JavaScript using Express.js. To start the server, navigate to the "server" folder and run the following commands in your terminal:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Install dependencies: `npm install`
+2. Run the server: `nodemon server.js`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Database Configuration
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Closure utilizes PostgreSQL as the database. If you don't have a PostgreSQL profile, create one. Then, create a new database and an `.env` file in the root directory with the following keys:
 
-### `npm run eject`
+- `DB_NAME`: "my_database"
+- `DB_USER`: "my_name"
+- `DB_PASSWORD`: "my_password"
+- `DB_HOST`: "localhost"
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Make sure to replace the values with your actual database and API key information.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Frontend Setup
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The frontend of Closure is developed with React.js. To start the frontend, navigate to the "closure" folder and follow these steps:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Install dependencies: `npm install`
+2. Obtain your Google Maps API key by visiting [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/cloud-setup). Create a new `.env` file and add your key as follows:
 
-## Learn More
+- `GOOGLE_MAP_KEY`: your_key
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. Start the React app: `npm start`
 
-### Code Splitting
+## Calculation Service
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The calculation service in Closure is created with Python using the NumPy library. Before working with it, ensure that you have Python 3 installed on your computer. Then, navigate to the "service" folder and run the following commands:
 
-### Analyzing the Bundle Size
+1. Install NumPy: `pip install numpy`
+2. Start the service: `python3 calc-service.py`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Feel free to explore and utilize the features of Closure for efficient oil and gas reserves estimation.
